@@ -45,13 +45,16 @@
   [string operation]
   (case (operation :action)
     :add-accent (add-accent-string string (operation :accent))
-    :add-mark (add-accent-string
-      (add-mark-string
-        (add-accent-string string :none)
-        (operation :mark)
-        (operation :target))
-      (get-last-accent-string string))
-    :append-char (str string (operation :char))))
+    ; Backup and reapply the accent in these two cases since it's likely to be
+    ; misplaced in previous operations.
+    (:add-mark :append-char) (add-accent-string
+      (case (operation :action)
+        :add-mark (add-mark-string
+          (add-accent-string string :none)
+          (operation :mark)
+          (operation :target))
+        :append-char (str (add-accent-string string :none) (operation :char)))
+      (get-last-accent-string string))))
 
 (defn get-transformation-list
   "Finds the list of possible transformations written in a VIQR-like syntax that
