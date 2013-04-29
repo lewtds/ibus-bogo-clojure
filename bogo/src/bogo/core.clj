@@ -41,7 +41,7 @@
         {:action nil}))))
 
 (defn execute-operation
-  "Execute the operation parsed by `interpret-viqr` on the given string."
+  "Executes the operation parsed by `interpret-viqr` on the given string."
   [string operation]
   (case (operation :action)
     :add-accent (add-accent-string string (operation :accent))
@@ -64,7 +64,7 @@
   (get input-method-map chr []))
 
 (defn process-key
-  "Process a single keypress."
+  "Processes a single keypress."
   [string chr]
   (let [result (reduce
       execute-operation
@@ -77,7 +77,7 @@
       result)))
 
 (defn process-seq
-  "Process a key sequence."
+  "Processes a key sequence."
   [key-sequence]
   (reduce
     (fn [string current-key]

@@ -21,7 +21,8 @@
   (get (get-vowel-family chr) (keyword-accent accent) chr))
 
 (defn add-accent-string
-  "doc-string"
+  "Adds accent to a given string. Also removes any existing accent if accent is
+  :none."
   [string accent]
   (let [{:keys [head vowel] _last :last} (separate string)]
     (apply str (map #(apply str %)
@@ -44,7 +45,8 @@
       _last]))))
 
 (defn get-accent-char
-  "doc-string"
+  "Get the accent of a single char. The result can be one of
+  [:none :grave :acute :hook :tilde :dot]."
   [chr]
   (get accent-keyword
     (.lastIndexOf
@@ -52,5 +54,7 @@
       (str chr)) :none))
 
 (defn get-last-accent-string
+  "Get the accent of the last (right-most) character with accent.
+  See get-accent-char for possible result values."
   [string]
   (first (drop-while #{:none} (reverse (map get-accent-char string)))))

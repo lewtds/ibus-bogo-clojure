@@ -17,19 +17,21 @@
    "yỳýỷỹỵ"])
 
 (defn in? [item collection]
+  "Checks if an item is in a collection."
   (some #{item} collection))
 
 (defn vowel?
-  "doc-string"
+  "Checks if a character is a vowel."
   [chr]
   (some #(in? chr %1) vowels))
 
 (defn word-boundary?
+  "Checks if a character is a word boundary character."
   [chr]
   (in? chr [\space \. \, \!]))
 
 (defn separate
-  "Separate a string into 3 parts - :head, :vowel and :last.
+  "Separates a string into 3 parts - :head, :vowel and :last.
   Eg.
   > (separate \"chuyen\"
     {:last (n), :vowel (u y e), :head (c h)}"

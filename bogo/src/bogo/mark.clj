@@ -19,7 +19,7 @@
           :family-u \u}})
 
 (defn get-family
-  "doc-string"
+  "Gets the mark family of a given char among :family-{a,e,o,u,d}."
   [chr]
   (case chr
     (\a \ă \â) :family-a
@@ -30,12 +30,12 @@
     nil))
 
 (defn add-mark-char
-  "Add mark to a single char."
+  "Adds mark to a single char."
   [chr mark]
   (get (get mark-affinity mark) (get-family chr) chr))
 
 (defn add-mark-string
-  "Add a mark to a string. The mark can only be added if 'target' appears in the
+  "Adds a mark to a string. The mark can only be added if 'target' appears in the
   string."
   ; be careful not to be too rigid with target (ơ -> ô). Only family target perhaps?
   [string mark target]
