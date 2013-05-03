@@ -30,17 +30,17 @@
   [chr]
   (in? chr [\space \. \, \!]))
 
+(def word-tokenizer-pattern
+  "A regular expression that is the heart of 'separate'."
+  (let [vowels-str (apply str vowels)]
+    (re-pattern (format "(.*?(?:qu|g|gi)?)(?:(%s)(%s))?$"
+      (str "[" vowels-str "]+")        ; vowel  - a
+      (str "[^" vowels-str "]*?")))))  ; tail   - nh
+
 (defn separate
   "Separates a string into 3 parts - :head, :vowel and :last.
   Eg.
   > (separate \"chuyen\"
     {:last (n), :vowel (u y e), :head (c h)}"
   [string]
-  (let
-      [rstring (reverse string)
-        [last-consonant stuff] (split-with (comp not vowel?) rstring)
-        [vowel head] (let [[vowel- head-] (split-with vowel? stuff)]
-                  (if (= (str (first head-) (last vowel-)) "qu")
-                    [(butlast vowel-) (cons "u" head-)]
-                    [vowel- head-]))]
-    (zipmap [:head :vowel :last] (map reverse [head vowel last-consonant]))))
+  (zipmap [:head :vowel :last] (rest (re-find word-tokenizer-pattern string))))
