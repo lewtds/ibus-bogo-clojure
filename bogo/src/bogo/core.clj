@@ -29,16 +29,16 @@
                   "~" :tilde
                   "." :dot)}
     2 (if (in? (first string) [\a \o \e \u \d])
-      {:action :add-mark
-       :mark (case (last string)
-                \^ :hat
-                \+ :horn
-                \( :breve
-                \d :bar)
-       :target (first string)}
-      (case (first string)
-        \+ {:action :append-char :char (last string)}
-        {:action nil}))))
+        {:action :add-mark
+         :mark (case (last string)
+                  \^ :hat
+                  \+ :horn
+                  \( :breve
+                  \d :bar)
+         :target (first string)}
+        (case (first string)
+          \+ {:action :append-char :char (last string)}
+          {:action nil}))))
 
 (defmacro apply-with-tone
   "doc-string"
