@@ -55,14 +55,14 @@
     ; Backup and reapply the tone in these two cases since it's likely to be
     ; misplaced in previous operations.
     :add-mark (apply-with-tone
-      (add-tone-string string :none)
+      string
       (add-mark-string (operation :mark)
                        (operation :target)))
     :append-char (if (word-boundary? (operation :char))
       ; Don't reapply tone if the appended char is a word-boundary.
       (str string (operation :char))
       (apply-with-tone
-        (add-tone-string string :none)
+        string
         (str (operation :char))))))
 
 (defn get-transformation-list
