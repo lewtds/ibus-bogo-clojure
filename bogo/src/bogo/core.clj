@@ -90,8 +90,10 @@
   [key-sequence]
   (reduce
     (fn [string current-key]
-      (let [[tail head] (map (comp (partial apply str) reverse) (split-with (complement word-boundary?) (reverse string)))]
-        (str head (process-key tail current-key))
-        ))
+      ; The regexp is to separate the string into two part at the last space
+      ; character.
+      ; TODO should be turned to word-boundary characters later.
+      (let [[_ head tail] (re-find #"(.*[ .])?(.*)\z" string)]
+        (str head (process-key tail current-key))))
     ""
     (seq key-sequence)))
